@@ -1,6 +1,7 @@
 import User from "../models/User.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Note from "../models/Note.model";
 
 export const signin = async (req, res) => {
   try {
@@ -60,7 +61,7 @@ export const signup = async (req, res) => {
       httpOnly: true,
       secure: false,
       maxAge: 3 * 24 * 60 * 60 * 1000,
-      sameSite: "none",
+      sameSite: "lax",
     });
 
     res.status(201).json({ message: "User created successfully" });
@@ -89,3 +90,24 @@ export const giveMyDetails = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+
+export const deleteAccount=async(req,res)=>{
+  try {
+    const user = req.user;
+    if(!user){
+      return res.status(401).json({ message: "Un authorized" });
+    }
+   await User.findByIdAndDelete(user._id);
+   await  Note.deleteMany({ user: user._id });
+   res.clearCookie("token", {
+  httpOnly: true,
+  sameSite: "lax",
+  secure: false
+});
+   req.user=null;
+   return res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}

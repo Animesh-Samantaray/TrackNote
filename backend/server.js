@@ -2,6 +2,7 @@ import express from "express";
 import cors from 'cors';
 import cookieparser from 'cookie-parser';
 import userRoute from './routes/user.route.js';
+import noteRoute from './routes/note.route.js';
 import connectDB from "./config/database.config.js";
 import dotenv from 'dotenv';
 
@@ -18,6 +19,7 @@ app.use(cookieparser());
 
 
 app.use('/api/auth',userRoute);
+app.use('/api/note',noteRoute);
 
 
 
