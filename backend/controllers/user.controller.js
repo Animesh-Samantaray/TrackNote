@@ -85,7 +85,8 @@ export const giveMyDetails = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "Un authorized" });
     }
-    return res.status(200).json({ isLoggedIn: true, user: user });
+    const myTotalNotes = user.notes.length;
+    return res.status(200).json({ isLoggedIn: true, user: user, totalNotes:myTotalNotes });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
