@@ -1,9 +1,19 @@
-import React from 'react'
+import API from "./api";
 
-const AuthService = () => {
-  return (
-    <div>AuthService</div>
-  )
+export const signin=async(data)=>{
+  await API.post('/auth/signin',data);
+}
+export const signup=async(data)=>{
+  await API.post('/auth/signup',data);
+}
+export const logout=async()=>{
+  await API.post('/auth/logout');
+}
+export const me=async()=>{
+  await API.get('/auth/me');
+}
+export const deleteAccount=async()=>{
+  await API.delete('/auth/');
 }
 
-export default AuthService
+
