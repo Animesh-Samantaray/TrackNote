@@ -1,0 +1,23 @@
+import { createContext } from "react";
+import App from "../App.jsx";
+
+const AuthContext = createContext();
+
+export function AuthProvider({ children }) {
+    const [user, setUser] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    return (
+        <AuthContext.Provider
+            value={{
+                user,
+                setUser,
+                isLoggedIn,
+                setIsLoggedIn,
+            }}
+        >
+            {children}
+        </AuthContext.Provider>
+    )
+}
+
+export default AuthContext;
