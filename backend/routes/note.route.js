@@ -1,6 +1,6 @@
 import express from "express";
 import protect from "../middlewares/user.middleware.js";
-import { addNote, getAllNotes } from "../controllers/note.controller.js";
+import { addNote, getAllNotes,getNote,updateNote,deleteNote,deleteAllNotes } from "../controllers/note.controller.js";
 
 const router = express.Router();
 

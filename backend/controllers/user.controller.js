@@ -1,7 +1,7 @@
-import User from "../models/User.model";
-import bcrypt from "bcrypt";
+import User from "../models/User.model.js";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import Note from "../models/Note.model";
+import Note from "../models/Note.model.js";
 
 export const signin = async (req, res) => {
   try {

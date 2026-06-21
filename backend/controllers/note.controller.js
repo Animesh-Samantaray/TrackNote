@@ -1,7 +1,7 @@
 import User from "../models/User.model.js";
 import Note from "../models/Note.model.js";
 
-const addNote = async (req, res) => {
+export const addNote = async (req, res) => {
     try {
         const userId = req.user?._id;
         const { title, description } = req.body;
@@ -25,7 +25,7 @@ const addNote = async (req, res) => {
     }
 }
 
-const getAllNotes = async (req, res) => {
+export const getAllNotes = async (req, res) => {
     try {
         const userId = req.user?._id;
         const notes = await Note.find({ user: userId });
@@ -36,7 +36,7 @@ const getAllNotes = async (req, res) => {
     }
 }
 
-const getNote = async (req, res) => {
+export const getNote = async (req, res) => {
     try {
         const userId = req.user?._id;
         const noteId = req.params?.id;
@@ -57,7 +57,7 @@ const getNote = async (req, res) => {
     }
 }
 
-const updateNote = async (req, res) => {
+export const updateNote = async (req, res) => {
     try {
         const id = req.params?.id;
         const userId = req.user?._id;
@@ -76,7 +76,7 @@ const updateNote = async (req, res) => {
 }
 
 
-const deleteNote = async (req, res) => {
+export const deleteNote = async (req, res) => {
     try {
         const id = req.params?.id;
         const user = await User.findById(req.user?._id);
@@ -102,7 +102,7 @@ const deleteNote = async (req, res) => {
     }
 }
 
-const deleteAllNotes = async (req, res) => {
+export const deleteAllNotes = async (req, res) => {
     try {
         const user = await User.findById(req.user?._id);
         if (!user) {

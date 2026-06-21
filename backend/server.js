@@ -13,13 +13,16 @@ connectDB();
 const port = process.env.PORT;
 const app=express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 app.use(cookieparser());
 
 
 
 app.use('/api/auth',userRoute);
-app.use('/api/note',noteRoute);
+app.use('/api/notes',noteRoute);
 
 
 
