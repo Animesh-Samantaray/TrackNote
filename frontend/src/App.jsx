@@ -7,6 +7,7 @@ import UpdateNote from './pages/UpdateNote'
 import Home from './pages/Home'
 import {Toaster} from 'react-hot-toast'
 import { AuthProvider } from './store/authStore'
+import Navbar from './components/Navbar'
 const App = () => {
   return (
     <AuthProvider>
@@ -22,6 +23,7 @@ const App = () => {
           }
         }}
       />
+      <Navbar />
     <Routes>
       <Route path="/" element={<Home/>} />
       <Route path="/signin" element={<Signin />} />

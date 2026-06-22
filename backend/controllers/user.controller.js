@@ -17,7 +17,7 @@ export const signin = async (req, res) => {
         .status(400)
         .json({ message: "User Does not exist , plz register" });
     }
-    const check = bcrypt.compare(password, user.password);
+    const check =await bcrypt.compare(password, user.password);
     if (!check) {
       return res.status(400).json({ message: "Invalid password" });
     }
@@ -25,8 +25,9 @@ export const signin = async (req, res) => {
       expiresIn: "7d",
     });
     res.cookie("token", token, {
-      sameSite: "none",
+      sameSite: "lax",
       httpOnly: true,
+      secure: false,
       maxAge: 3 * 24 * 60 * 60 * 1000,
     });
     const sendingUser = user.toObject();
@@ -47,23 +48,23 @@ export const signup = async (req, res) => {
     if (await User.findOne({ email })) {
       return res.status(400).json({ message: "User already exists" });
     }
-    const salt = bcrypt.genSalt(10);
-    const newPassword = bcrypt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const newPassword = await bcrypt.hash(password, salt);
     const user = new User({
       name,
       email,
       password: newPassword,
     });
-    awaituser.save();
+    await user.save();
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
 
     res.cookie("token", token, {
+      sameSite: "lax",
       httpOnly: true,
       secure: false,
       maxAge: 3 * 24 * 60 * 60 * 1000,
-      sameSite: "lax",
     });
     const sendingUser = user.toObject();
     delete sendingUser.password;
@@ -76,7 +77,9 @@ export const signup = async (req, res) => {
 export const logout = (req, res) => {
   try {
     res.clearCookie("token", {
+      sameSite: "lax",
       httpOnly: true,
+      secure: false,
     });
     return res.status(200).json({ message: "Logged out successsfully" });
   } catch (error) {}
